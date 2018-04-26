@@ -53,7 +53,7 @@ class GameWindow(QWidget):
             qp.fillRect(rect[0], rect[1], rect[2], rect[3], brush)
         qp.setPen(QColor(self.quiz_color))
         qp.setFont(QFont('Times New Roman', 20, QFont.Bold))
-        if self.quiz_type:
+        if self.quiz_type == 1:
             textRect = QRectF(0, 0, 260, 60)
         else:
             textRect = QRectF(0, 280, 260, 60)
@@ -63,17 +63,15 @@ class GameWindow(QWidget):
 
     def generate_quiz(self):
         [self.quiz_text, self.quiz_color, self.quiz_type] = back_color.generate_quiz()
-        return [self.quiz_text, self.quiz_color, self.quiz_type]
 
     def mouseReleaseEvent(self, mouseEvent):
         x = mouseEvent.x()
         y = mouseEvent.y()
         if back_color.mouse_press(x, y, self.quiz_text, self.quiz_color, self.quiz_type):
-            self.quiz_text = 'Correct'
+            self.quiz_text = 'correct'
             self.correctSound.play()
-            return True
         else:
-            self.quiz_text = 'Incorrect'
+            self.quiz_text = 'incorrect'
             self.incorrectSound.play()
         self.timer.start()
         self.repaint()
